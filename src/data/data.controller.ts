@@ -15,7 +15,8 @@ export class DataController {
     @Body() createDto: any,
     @Req() request: Request // Injecting request to get user info
   ) {
-    const userId = request.user.userId; // Getting user ID from token
+     
+    const userId =request["user"]["userId"]
     return this.dataService.create(collectionName, createDto, userId);
   }
 
@@ -31,7 +32,8 @@ export class DataController {
     @Body() updateDto: any,
     @Req() request: Request // Injecting request to get user info
   ) {
-    const userId = request.user.userId; // Getting user ID from token
+  
+    const userId =request["user"]["userId"]
     return this.dataService.update(collectionName, id, updateDto, userId);
   }
 

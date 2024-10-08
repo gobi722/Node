@@ -16,10 +16,10 @@ export class DataService {
     const schemaDefinition = new Schema(
       {
         any: {},
-        created_on: { type: Date, default: Date.now },
-        created_by: { type: String, required: true },
-        updated_on: { type: Date, default: Date.now },
-        updated_by: { type: String, required: true },
+        created_on: { type: Date},
+        created_by: { type: String },
+        updated_on: { type: Date},
+        updated_by: { type: String },
       },
       { strict: false }
     );

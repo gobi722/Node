@@ -6,16 +6,23 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './schemas/user.schema';
+import jwt from 'fastify-jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService
-    // const jwtSecret = this.configService.get<string>('JWT_SECRET');
-    // console.log(`JWT Secret: ${jwtSecret}`);
+   
   ) {}
- 
+  // decodeToken(token: string): any {
+  //   try {
+  //     const decoded = jwt.verify(token, 'your_secret_key');  // Add your secret key here
+  //     return decoded;
+  //   } catch (err) {
+  //     throw new Error('Invalid token');
+  //   }
+  // }
   async register(createUserDto: CreateUserDto): Promise<User> {
     const { username, password } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,7 +36,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { username: user.username, sub: user._id };
+    const payload = { username: user.username, userId: user._id };
     return {
       access_token: this.jwtService.sign(payload),
     };
